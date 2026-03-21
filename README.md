@@ -33,12 +33,12 @@ python data/get_data.py
 bash run.sh
 ```
 
-## Results (to be updated)
+## Results (Week 2 — Preliminary)
 | Model | Macro-F1 | Accuracy |
 |-------|----------|----------|
-| Majority baseline | - | - |
-| Text-CNN | - | - |
-| DistilBERT (fine-tuned) | - | - |
+| Logistic Regression (TF-IDF) | 0.2214 | 0.2478 |
+| Text-CNN (GloVe 300d) | 0.2384 | 0.2478 |
+| DistilBERT (fine-tuned) | TBD | TBD |
 
 ## Repo Structure
 See `docs/` for proposal, checkpoint, and final report.
