@@ -59,18 +59,41 @@ project-root/
   data/
     get_data.py
     README.md
+    raw/
   src/
     data_pipeline.py
     train.py
     eval.py
     rl_agent.py
     models/
+      __init__.py
       text_cnn.py
       ner_module.py
+    utils/
   notebooks/
     01_eda.ipynb
   experiments/
+    configs/
+    logs/
     results/
+      week2/
+        class_distribution.png
+        text_length.png
+        textcnn_learning_curves.png
+        bandit_learning_curves.png
+        baseline_lr_results.json
+        textcnn_results.json
+        bandit_results.json
+      week3/
+        distilbert_learning_curves.png
+        distilbert_confusion_matrix.png
+        distilbert_calibration_curves.png
+        ablation1_adam_vs_adamw.png
+        ablation2_early_stopping.png
+        party_slice_analysis.png
+        ablation1_results.json
+        ablation2_results.json
+        eval_results.json
   docs/
     proposal.pdf
     checkpoint.pdf
