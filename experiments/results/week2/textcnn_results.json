@@ -1,0 +1,12 @@
+{
+  "model": "Text-CNN (GloVe 300d)",
+  "validation": {
+    "best_macro_f1": 0.2407,
+    "best_epoch": 2
+  },
+  "test": {
+    "accuracy": 0.2478,
+    "macro_f1": 0.2384
+  },
+  "observations": "Overfitting observed after epoch 3"
+}

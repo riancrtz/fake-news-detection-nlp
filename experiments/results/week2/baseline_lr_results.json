@@ -1,0 +1,11 @@
+{
+  "model": "Logistic Regression (TF-IDF)",
+  "validation": {
+    "accuracy": 0.2539,
+    "macro_f1": 0.2366
+  },
+  "test": {
+    "accuracy": 0.2478,
+    "macro_f1": 0.2214
+  }
+}
