@@ -1,0 +1,23 @@
+{
+  "distilbert_test": {
+    "accuracy": 0.2762,
+    "macro_f1": 0.2602
+  },
+  "party_slice_analysis": {
+    "republican": {
+      "n": 571,
+      "macro_f1": 0.2231,
+      "accuracy": 0.2662
+    },
+    "democrat": {
+      "n": 406,
+      "macro_f1": 0.2715,
+      "accuracy": 0.2857
+    },
+    "none": {
+      "n": 214,
+      "macro_f1": 0.2641,
+      "accuracy": 0.271
+    }
+  }
+}
