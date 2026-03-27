@@ -12,9 +12,7 @@ import torch
 import torch.nn.functional as F
 from transformers import DistilBertTokenizerFast, DistilBertForSequenceClassification
 
-sys.path.append(os.path.dirname(__file__))
-
-RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "experiments", "results")
+RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "experiments", "results")
 
 LABEL_NAMES = {
     0: "pants-fire",
@@ -57,10 +55,11 @@ def show_entities(text):
     print(f"GPE       : {entities['GPE'] or 'none'}")
 
 # ── Prediction function ────────────────────────────────────────────────────────
-def predict(statement, threshold=0.8):
+def predict(statement, threshold=0.4, production_threshold=0.8):
     """
     Predict veracity of a political statement.
-    Abstains if max confidence is below threshold.
+    Uses lower threshold for demo display purposes.
+    Production threshold is 0.8 as learned by the bandit agent.
     """
     inputs = tokenizer(
         statement,
@@ -76,18 +75,19 @@ def predict(statement, threshold=0.8):
         pred    = probs.argmax().item()
         conf    = probs[pred].item()
 
-    print(f"\nStatement : '{statement}'")
-
-    if conf < threshold:
-        print(f"Prediction: ABSTAIN (confidence {conf:.2%} below threshold {threshold})")
+    print(f"Statement : '{statement}'")
+    print(f"Prediction: {LABEL_NAMES[pred].upper()}")
+    print(f"Confidence: {conf:.2%}")
+    print(f"Production threshold (bandit): {production_threshold} — ", end="")
+    if conf < production_threshold:
+        print("would ABSTAIN and flag for human review")
     else:
-        print(f"Prediction: {LABEL_NAMES[pred].upper()}")
-        print(f"Confidence: {conf:.2%}")
+        print("would ACT on this prediction")
 
     print(f"\nAll class probabilities:")
     for label, prob in zip(LABEL_NAMES.values(), probs):
         bar = '█' * int(prob.item() * 20)
-        print(f"  {label:<15} {prob.item():.2%} {bar}")
+        print(f"  {label:<15} {prob.item():.2%}  {bar}")
 
 # ── Run demo ───────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
