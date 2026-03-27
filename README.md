@@ -35,15 +35,17 @@ bash run.sh
 ```
 
 ## Results
+
 | Model | Test Accuracy | Test Macro-F1 |
 |-------|-------------|---------------|
 | Logistic Regression (TF-IDF) | 0.2478 | 0.2214 |
 | Text-CNN (GloVe 300d) | 0.2478 | 0.2384 |
 | DistilBERT (fine-tuned) | 0.2762 | 0.2602 |
-| DistilBERT + Adam | 0.2897 | 0.2743 |
-| DistilBERT + Early Stopping | 0.2762 | 0.2654 |
+| DistilBERT + Adam (Ablation 1) | 0.2897 | 0.2743 |
+| DistilBERT + Early Stopping (Ablation 2) | 0.2762 | 0.2654 |
 
-## Party-level Slice Analysis
+### Party-level Slice Analysis
+
 | Party | n | Macro-F1 |
 |-------|---|----------|
 | Republican | 571 | 0.2231 |
