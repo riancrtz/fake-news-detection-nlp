@@ -30,8 +30,15 @@ python -m spacy download en_core_web_sm
 # 2. Download data
 python data/get_data.py
 
-# 3. Run full pipeline (train + eval, ~60-75 min on Colab T4)
+# 3. Download model weights
+# Get distilbert_best.pt from the v1.0 GitHub Release
+# Place at: experiments/results/distilbert_best.pt
+
+# 4. Run full pipeline (train + eval, ~60-75 min on Colab T4)
 bash run.sh
+
+# 5. Run demo only
+python src/demo.py
 ```
 
 ## Results
@@ -45,12 +52,22 @@ bash run.sh
 | DistilBERT + Early Stopping (Ablation 2) | 0.2762 | 0.2654 |
 
 ### Party-level Slice Analysis
-
 | Party | n | Macro-F1 |
 |-------|---|----------|
 | Republican | 571 | 0.2231 |
 | Democrat | 406 | 0.2715 |
 | None | 214 | 0.2641 |
+
+## Model Weights
+
+The fine-tuned DistilBERT model exceeds GitHub's 100MB file size limit and is not stored in the repository.
+
+**Download:** Attach to v1.0 release on GitHub Releases page.
+
+Place the file at:
+```
+experiments/results/distilbert_best.pt
+```
 
 ## Repo Structure
 ```
