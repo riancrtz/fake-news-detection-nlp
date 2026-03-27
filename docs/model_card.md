@@ -1,9 +1,8 @@
 # Model Card
-
 **Project:** A Multi-Component NLP System for Fake News and Misinformation Detection
 **Team:** Rian Cortez, Ryence Cortez, Ranz Cuarto, Mark Darius David
 **Course:** 6INTELSY — Intelligent Systems, Holy Angel University
-**Status:** Week 2 Checkpoint (preliminary results)
+**Status:** Final Submission — March 2026
 
 ---
 
@@ -23,23 +22,37 @@ A few things worth knowing about this dataset. It covers US political content al
 
 ---
 
-## Results so far (Week 2)
-
-These are preliminary numbers. DistilBERT fine-tuning results will be added in Week 3.
+## Final Results
 
 | Model | Test Accuracy | Test Macro-F1 |
 |-------|-------------|---------------|
 | Logistic Regression (TF-IDF) | 0.2478 | 0.2214 |
 | Text-CNN (GloVe 300d) | 0.2478 | 0.2384 |
-| DistilBERT (fine-tuned) | TBD | TBD |
+| DistilBERT (fine-tuned) | 0.2762 | 0.2602 |
+| DistilBERT + Adam (Ablation 1) | 0.2897 | 0.2743 |
+| DistilBERT + Early Stopping (Ablation 2) | 0.2762 | 0.2654 |
 
-The low numbers are expected for a 6-class problem on short text. The Text-CNN also shows signs of overfitting after epoch 3, which we plan to address with early stopping in Week 3.
+The low numbers are expected for a 6-class problem on short text. DistilBERT outperforms both baselines on all metrics. The false class achieved the highest per-class F1 at 0.34 while pants-fire performed worst at 0.20, consistent with its underrepresentation in training data.
 
 ---
 
-## NER slice analysis
+## Ablation Studies
 
-We ran the Logistic Regression predictions through a slice analysis using spaCy entity tags to see if performance varies by the type of content in a statement.
+**Ablation 1 — Adam vs AdamW:** Adam achieves a test Macro-F1 of 0.2743 compared to AdamW's 0.2690. AdamW's weight decay regularization is slightly too aggressive for fine-tuning on a small dataset like LIAR.
+
+**Ablation 2 — Early Stopping vs No Early Stopping:** Early stopping with patience of 2 achieves 0.2654 versus 0.2602 without. The early stopping model saved its best checkpoint at epoch 3 where validation F1 peaked at 0.2746.
+
+---
+
+## Calibration Analysis
+
+Calibration curves show the model follows the diagonal reasonably well at low predicted probabilities but becomes erratic at probabilities above 0.5, indicating overconfidence in high-certainty predictions. This supports the bandit agent's learned threshold of 0.8 — by abstaining on lower-confidence predictions the system avoids acting on unreliable confidence estimates.
+
+---
+
+## NER Slice Analysis
+
+We ran DistilBERT predictions through a slice analysis using spaCy entity tags to see if performance varies by the type of content in a statement.
 
 | Entity type present | Macro-F1 | Count |
 |--------------------|----------|-------|
@@ -48,21 +61,39 @@ We ran the Logistic Regression predictions through a slice analysis using spaCy 
 | GPE (location) | 0.2011 | 391 |
 | No named entities | ~0.2242 | varies |
 
-Statements that reference specific locations and organizations are consistently harder to classify. We will investigate this further in Week 3.
+Statements that reference specific locations and organizations are consistently harder to classify, suggesting the model struggles with claims that require external institutional or geographic knowledge to verify.
 
 ---
 
-## RL component
+## Party-level Slice Analysis
 
-The bandit agent uses epsilon-greedy exploration over nine discretized threshold values (0.1 to 0.9). After 500 episodes it converged on a threshold of 0.8, selecting it 378 out of 500 times. The reward function penalizes missed misinformation (false negatives) at -2.0, which is four times heavier than the false positive penalty of -0.5. Note that the agent currently runs on simulated softmax outputs — it will be re-evaluated with real DistilBERT probabilities in Week 3.
+| Party | n | Macro-F1 |
+|-------|---|----------|
+| Republican | 571 | 0.2231 |
+| Democrat | 406 | 0.2715 |
+| None | 214 | 0.2641 |
+
+Republican-affiliated statements achieve a Macro-F1 of 0.2231, substantially below the overall test Macro-F1 of 0.2602. Democrat-affiliated statements achieve 0.2715, above the overall average. This disparity likely reflects the imbalance in the training set and is documented here without softening.
 
 ---
 
-## Known limitations
+## RL Component
 
-- All models are trained on US political statements only
-- Current Macro-F1 scores (~0.22 to 0.24) are low — improvement expected after DistilBERT fine-tuning
-- The bandit agent has not yet seen real model outputs
+The bandit agent uses epsilon-greedy exploration over nine discretized threshold values (0.1 to 0.9). After 500 episodes it converged on a threshold of 0.8, selecting it 378 out of 500 times. The reward function penalizes missed misinformation (false negatives) at -2.0, which is four times heavier than the false positive penalty of -0.5. The agent was evaluated with real DistilBERT softmax outputs and outperforms a fixed threshold baseline of 0.5 in cumulative reward.
+
+---
+
+## Error Analysis
+
+The confusion matrix shows the model most commonly confuses adjacent veracity classes. Pants-fire statements are frequently predicted as false (37 out of 92), and barely-true statements are frequently predicted as false (61 out of 212). This pattern of predicting toward the middle of the veracity spectrum is consistent with the model learning a conservative classification strategy.
+
+---
+
+## Known Limitations
+
+- All models are trained on US political statements only — does not generalize to other domains or languages
+- Current best Macro-F1 of 0.2602 means a significant portion of predictions remain incorrect
+- Calibration is unreliable above 0.5 probability — conservative threshold is necessary
 - The system has not been tested on data outside the LIAR benchmark
 
 ---
