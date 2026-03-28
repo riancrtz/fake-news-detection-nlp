@@ -27,40 +27,96 @@ This system is an NLP-based misinformation detection pipeline combining:
 [LIAR Dataset](https://www.cs.ucsb.edu/~william/data/liar_dataset.zip) — 12,836 labeled political statements from PolitiFact.
 
 ## Quick Start
+
+> **Which option should you choose?** If you have a GPU, use Option 1 or 3. If you don't have a GPU or want the easiest setup, use Option 2 (Google Colab) — it's free and requires no local installation.
+
+### Option 1 — Local (Linux/Mac)
 ```bash
-# 1. Setup environment
+# 1. Clone the repo
+git clone https://github.com/riancrtz/fake-news-detection-nlp.git
+cd fake-news-detection-nlp
+
+# 2. Setup environment
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 
-# 2. Download data
+# 3. Download data
 python data/get_data.py
 
-# 3. Download model weights
-# Get distilbert_best.pt from the v1.0 GitHub Release
-# Place at: experiments/results/distilbert_best.pt
+# 4. Download distilbert_best.pt from the v1.0 GitHub Release
+#    Place at: experiments/results/distilbert_best.pt
 
-# 4. Run demo only (recommended)
+# 5. Run this command if you want to run the demo only
 bash run.sh --demo
 
-# 5. Run full pipeline (retrain everything, ~60-75 min on GPU)
+# 6. Run these commands if you want to run the full pipeline (retrain everything)
 bash run.sh
 ```
 
-> **Note:** Full pipeline requires a CUDA-capable GPU.
-> Recommended: Google Colab with T4 GPU runtime (~60-75 min).
+### Option 2 — Google Colab (Recommended)
 
-> **Windows users:** `bash run.sh` requires Git Bash or WSL. On Windows PowerShell, run the steps directly instead:
-> ```
-> # Demo only
-> python src/demo.py
->
-> # Full pipeline
-> python data/get_data.py
-> python src/train.py
-> python src/eval.py
-> python src/rl_agent.py
-> python src/demo.py
-> ```
+Run these cells in a new Colab notebook with T4 GPU runtime enabled:
+```python
+# Cell 1 — Clone and setup
+!git clone https://github.com/riancrtz/fake-news-detection-nlp.git
+%cd fake-news-detection-nlp
+!pip install -r requirements.txt -q
+!python -m spacy download en_core_web_sm -q
+
+# Cell 2 — Download LIAR dataset
+!python data/get_data.py
+
+# Cell 3 — Load model weights from Google Drive
+# First, download distilbert_best.pt from the v1.0 GitHub Release
+# Then upload it to your own Google Drive root folder (My Drive)
+from google.colab import drive
+drive.mount('/content/drive')
+import shutil, os
+os.makedirs('experiments/results', exist_ok=True)
+shutil.copy('/content/drive/MyDrive/distilbert_best.pt', 'experiments/results/distilbert_best.pt')
+print("Model weights loaded!")
+
+# Cell 4 — Run this command if you want to run the demo only
+!python src/demo.py
+
+# Cell 5 — Run these commands if you want to run the full pipeline (retrain everything)
+# !python src/train.py
+# !python src/eval.py
+# !python src/rl_agent.py
+# !python src/demo.py
+```
+
+> **Note:** For the full pipeline uncomment the lines in Cell 5 and comment out the demo line in Cell 4.
+
+### Option 3 — Local (Windows PowerShell)
+```
+# 1. Download the repo zip from GitHub and extract it
+# Navigate into the inner folder:
+cd fake-news-detection-nlp-main
+cd fake-news-detection-nlp-main
+
+# 2. Setup environment
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
+
+# 3. Download data
+python data/get_data.py
+
+# 4. Download distilbert_best.pt from the v1.0 GitHub Release
+#    Place at: experiments/results/distilbert_best.pt
+
+# 5. Run this command if you want to run the demo only 
+python src/demo.py
+
+# 6. Run these commands if you want to run the full pipeline (retrain everything)
+python data/get_data.py
+python src/train.py
+python src/eval.py
+python src/rl_agent.py
+python src/demo.py
+```
+
+> **Note:** Full pipeline requires a CUDA-capable GPU. Recommended: Google Colab with T4 GPU runtime (~60-75 min). Running on CPU is supported for demo only.
 
 ## Results
 
