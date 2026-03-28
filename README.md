@@ -79,6 +79,9 @@ experiments/results/distilbert_best.pt
 ```
 
 ## Repo Structure
+
+> **Note on model components:** The four AI components are organized as follows — Text-CNN and NER module are in `src/models/` because they are standalone reusable classes. The contextual bandit RL agent is in `src/rl_agent.py` because it operates as a decision-making agent on top of the classifier outputs rather than as a model itself. DistilBERT fine-tuning is handled directly in `src/train.py` and `src/eval.py` via the HuggingFace transformers library because it does not require a custom architecture definition.
+
 ```
 project-root/
   README.md
