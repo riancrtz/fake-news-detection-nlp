@@ -1,14 +1,30 @@
 #!/bin/bash
 # run.sh
 # Full pipeline for the fake news detection system.
-# Runs data download, training, evaluation, and demo.
-# Usage: bash run.sh
+# Usage:
+#   bash run.sh          — full pipeline (download, train, eval, demo)
+#   bash run.sh --demo   — demo only using pre-trained model
 
 set -e
 
 echo "============================================"
 echo " Fake News Detection NLP Pipeline"
 echo "============================================"
+
+if [ "$1" == "--demo" ]; then
+    echo ""
+    echo "Demo mode — using pre-trained model"
+    echo "Make sure distilbert_best.pt is at:"
+    echo "experiments/results/distilbert_best.pt"
+    echo ""
+    echo "[1/1] Running demo..."
+    python src/demo.py
+    echo ""
+    echo "============================================"
+    echo " Demo complete!"
+    echo "============================================"
+    exit 0
+fi
 
 # Step 1 — Download data
 echo ""
