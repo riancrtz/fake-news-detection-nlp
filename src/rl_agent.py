@@ -137,6 +137,5 @@ if __name__ == "__main__":
     plt.legend()
     plt.tight_layout()
     plt.savefig(os.path.join(RESULTS_DIR, 'bandit_learning_curves.png'))
-    plt.show()
 
     save_results(agent, cumulative_rewards, fixed_rewards)
