@@ -97,8 +97,9 @@ def save_results(agent, cumulative_rewards, fixed_rewards):
             str(round(t, 1)): int(c)
             for t, c in zip(THRESHOLDS, agent.action_counts)
         },
-        "note": "Week 2 uses simulated softmax outputs. "
-                "Will update with real DistilBERT outputs in Week 3."
+        "note": "note": "Bandit agent trained on simulated softmax outputs sampled from "
+                        "a Dirichlet distribution. Re-evaluation with real DistilBERT "
+                        "outputs is left for future work."
     }
     with open(os.path.join(RESULTS_DIR, 'bandit_results.json'), 'w') as f:
         json.dump(results, f, indent=2)
