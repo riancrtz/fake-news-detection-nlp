@@ -79,7 +79,7 @@ Republican-affiliated statements achieve a Macro-F1 of 0.2231, substantially bel
 
 ## RL Component
 
-The bandit agent uses epsilon-greedy exploration over nine discretized threshold values (0.1 to 0.9). After 500 episodes it converged on a threshold of 0.8, selecting it 378 out of 500 times. The reward function penalizes missed misinformation (false negatives) at -2.0, which is four times heavier than the false positive penalty of -0.5. The agent was evaluated with real DistilBERT softmax outputs and outperforms a fixed threshold baseline of 0.5 in cumulative reward.
+The bandit agent uses epsilon-greedy exploration over nine discretized threshold values (0.1 to 0.9). After 500 episodes it converged on a threshold of 0.8, selecting it 378 out of 500 times. The reward function penalizes missed misinformation (false negatives) at -2.0, which is four times heavier than the false positive penalty of -0.5. The agent's training and convergence statistics are based on softmax probabilities sampled from a Dirichlet distribution as a proxy for classifier output. Re-evaluation using live DistilBERT probabilities is left for future work.
 
 ---
 
