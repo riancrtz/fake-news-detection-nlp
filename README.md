@@ -1,9 +1,11 @@
 # A Multi-Component NLP System for Fake News and Misinformation Detection
 
-**6INTELSY Final Project — AY 2025-2026, 2nd Semester**
+**6INTELSY — Intelligent Systems | 6DANCS — Data Analytics for Computer Science**
+**AY 2025-2026, 2nd Semester**
 Holy Angel University — School of Computing
 
 ## Team
+
 | Role | Member |
 |------|--------|
 | Project Lead / Integration | Rian Cortez |
@@ -12,13 +14,16 @@ Holy Angel University — School of Computing
 | Evaluation & MLOps Lead | Mark Darius David |
 
 ## Project Overview
+
 This system is an NLP-based misinformation detection pipeline combining:
+
 - **Core Model:** Fine-tuned DistilBERT for veracity classification
 - **CNN Component:** Text-CNN (Kim, 2014) as baseline and ablation
 - **NLP Component:** NER-based provenance tagging (spaCy)
 - **RL Component:** Contextual bandit for adaptive threshold tuning
 
 ## Dataset
+
 [LIAR Dataset](https://www.cs.ucsb.edu/~william/data/liar_dataset.zip) — 12,836 labeled political statements from PolitiFact.
 
 ## Quick Start
@@ -34,14 +39,14 @@ python data/get_data.py
 # Get distilbert_best.pt from the v1.0 GitHub Release
 # Place at: experiments/results/distilbert_best.pt
 
-# 4. Run full pipeline (train + eval, ~60-75 min on Colab T4)
-bash run.sh
+# 4. Run demo only (recommended)
+bash run.sh --demo
 
-# 5. Run demo only
-python src/demo.py
+# 5. Run full pipeline (retrain everything, ~60-75 min on GPU)
+bash run.sh
 ```
 
-> **Note:** Full pipeline requires a CUDA-capable GPU. 
+> **Note:** Full pipeline requires a CUDA-capable GPU.
 > Recommended: Google Colab with T4 GPU runtime (~60-75 min).
 
 ## Results
@@ -55,6 +60,7 @@ python src/demo.py
 | DistilBERT + Early Stopping (Ablation 2) | 0.2762 | 0.2654 |
 
 ### Party-level Slice Analysis
+
 | Party | n | Macro-F1 |
 |-------|---|----------|
 | Republican | 571 | 0.2231 |
@@ -65,7 +71,7 @@ python src/demo.py
 
 The fine-tuned DistilBERT model exceeds GitHub's 100MB file size limit and is not stored in the repository.
 
-**Download:** Attach to v1.0 release on GitHub Releases page.
+**Download:** Available as an asset on the v1.0 GitHub Release page.
 
 Place the file at:
 ```
@@ -86,6 +92,7 @@ project-root/
     data_pipeline.py
     train.py
     eval.py
+    demo.py
     rl_agent.py
     models/
       __init__.py
@@ -94,6 +101,7 @@ project-root/
     utils/
   notebooks/
     01_eda.ipynb
+    02_eda.ipynb
   experiments/
     configs/
     logs/
@@ -126,6 +134,7 @@ project-root/
 ```
 
 ## Release Tags
+
 - `v0.1` — Proposal & Setup (Week 1)
 - `v0.5` — Week 2 Checkpoint
 - `v0.9` — Release Candidate (Week 3)
