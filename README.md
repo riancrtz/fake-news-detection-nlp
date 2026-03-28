@@ -125,9 +125,9 @@ project-root/
         ablation2_results.json
         eval_results.json
   docs/
-    proposal.pdf
-    checkpoint.pdf
-    final_report.pdf
+    proposal (Week 1).pdf
+    checkpoint (Week 2).pdf
+    final_report (Week 3).pdf
     slides.pdf
     model_card.md
     ethics_statement.md
