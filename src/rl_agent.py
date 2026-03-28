@@ -97,7 +97,7 @@ def save_results(agent, cumulative_rewards, fixed_rewards):
             str(round(t, 1)): int(c)
             for t, c in zip(THRESHOLDS, agent.action_counts)
         },
-        "note": "note": "Bandit agent trained on simulated softmax outputs sampled from "
+        "note": "Bandit agent trained on simulated softmax outputs sampled from "
                         "a Dirichlet distribution. Re-evaluation with real DistilBERT "
                         "outputs is left for future work."
     }
