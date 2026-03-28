@@ -41,6 +41,9 @@ bash run.sh
 python src/demo.py
 ```
 
+> **Note:** Full pipeline requires a CUDA-capable GPU. 
+> Recommended: Google Colab with T4 GPU runtime (~60-75 min).
+
 ## Results
 
 | Model | Test Accuracy | Test Macro-F1 |
