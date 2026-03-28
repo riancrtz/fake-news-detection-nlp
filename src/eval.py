@@ -70,7 +70,7 @@ model = DistilBertForSequenceClassification.from_pretrained(
 model.load_state_dict(torch.load(
     os.path.join(RESULTS_DIR, 'distilbert_best.pt'),
     map_location=DEVICE
-))
+), strict=False)
 model.eval()
 print("Model loaded!")
 
