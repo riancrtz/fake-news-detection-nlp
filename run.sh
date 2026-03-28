@@ -28,22 +28,27 @@ fi
 
 # Step 1 — Download data
 echo ""
-echo "[1/4] Downloading LIAR dataset..."
+echo "[1/5] Downloading LIAR dataset..."
 python data/get_data.py
 
 # Step 2 — Train all models (Logistic Regression, Text-CNN, DistilBERT)
 echo ""
-echo "[2/4] Training all models (~60-75 min on GPU)..."
+echo "[2/5] Training all models (~60-75 min on GPU)..."
 python src/train.py
 
 # Step 3 — Evaluate
 echo ""
-echo "[3/4] Running evaluation..."
+echo "[3/5] Running evaluation..."
 python src/eval.py
 
-# Step 4 — Demo
+# Step 4 — Train bandit agent
 echo ""
-echo "[4/4] Running demo..."
+echo "[4/5] Training bandit agent..."
+python src/rl_agent.py
+
+# Step 5 — Demo
+echo ""
+echo "[5/5] Running demo..."
 python src/demo.py
 
 echo ""
