@@ -57,7 +57,7 @@ Every statement in the LIAR dataset is a public utterance made by a public figur
 - Full party-level slice analysis on DistilBERT predictions confirmed Republican F1 gap of ~0.05 below overall
 - Calibration curve analysis confirmed overconfidence above 0.5 probability — conservative threshold of 0.8 is justified
 - Error analysis on confusion matrix confirmed pants-fire is the hardest class (F1: 0.20) and is most frequently confused with false
-- Bandit agent re-evaluated with real DistilBERT outputs — converged on threshold 0.8, outperforms fixed baseline
+- Bandit agent training confirmed convergence on a threshold of 0.8 and outperformed the fixed baseline, while re-evaluation using live DistilBERT probabilities is left for future work.
 
 ---
 
