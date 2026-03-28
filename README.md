@@ -49,6 +49,18 @@ bash run.sh
 > **Note:** Full pipeline requires a CUDA-capable GPU.
 > Recommended: Google Colab with T4 GPU runtime (~60-75 min).
 
+> **Windows users:** `bash run.sh` requires Git Bash or WSL. On Windows PowerShell, run the steps directly instead:
+> ```
+> # Demo only
+> python src/demo.py
+>
+> # Full pipeline
+> python data/get_data.py
+> python src/train.py
+> python src/eval.py
+> python src/demo.py
+> ```
+
 ## Results
 
 | Model | Test Accuracy | Test Macro-F1 |
