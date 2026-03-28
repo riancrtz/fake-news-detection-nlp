@@ -58,6 +58,7 @@ bash run.sh
 > python data/get_data.py
 > python src/train.py
 > python src/eval.py
+> python src/rl_agent.py
 > python src/demo.py
 > ```
 
