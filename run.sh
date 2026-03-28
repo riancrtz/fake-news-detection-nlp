@@ -15,9 +15,9 @@ echo ""
 echo "[1/4] Downloading LIAR dataset..."
 python data/get_data.py
 
-# Step 2 — Train DistilBERT
+# Step 2 — Train all models (Logistic Regression, Text-CNN, DistilBERT)
 echo ""
-echo "[2/4] Training DistilBERT..."
+echo "[2/4] Training all models (~60-75 min on GPU)..."
 python src/train.py
 
 # Step 3 — Evaluate
