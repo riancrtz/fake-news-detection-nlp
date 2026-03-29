@@ -54,15 +54,26 @@ bash run.sh --demo
 # 6. Run these commands if you want to run the full pipeline (retrain everything)
 bash run.sh                   
 ```
+> **Note:** All results including plots and JSON metrics are saved to `experiments/results/`.
 
 ### Option 2 — Google Colab (Recommended)
 Run these cells in a new Colab notebook with T4 GPU runtime enabled:
 ```python
 # Cell 1 — Clone and setup
-!git clone https://github.com/riancrtz/fake-news-detection-nlp.git
-%cd fake-news-detection-nlp
+import os
+
+if not os.path.exists('fake-news-detection-nlp'):
+    !git clone https://github.com/riancrtz/fake-news-detection-nlp.git
+
+%cd /content/fake-news-detection-nlp
 !pip install -r requirements.txt -q
 !python -m spacy download en_core_web_sm -q
+
+import spacy.cli
+spacy.cli.download("en_core_web_sm")
+import en_core_web_sm
+nlp = en_core_web_sm.load()
+print("Setup complete!")
 
 # Cell 2 — Download LIAR dataset
 !python data/get_data.py    
@@ -70,6 +81,8 @@ Run these cells in a new Colab notebook with T4 GPU runtime enabled:
 # Cell 3 — Load model weights from Google Drive
 # First, download distilbert_best.pt from the v1.0 GitHub Release
 # Then upload it to your own Google Drive root folder (My Drive)
+# Note: Running the full pipeline (step 6) will overwrite this file
+#       with a newly trained model. Download again if needed.
 from google.colab import drive
 drive.mount('/content/drive')
 import shutil, os
@@ -86,6 +99,7 @@ print("Model weights loaded!")
 !python src/rl_agent.py         # trains contextual bandit agent
 !python src/demo.py             # runs live demo using DistilBERT + NER + bandit
 ```
+> **Note:** All results including plots and JSON metrics are saved to `experiments/results/` within the Colab session. Download them manually or copy to Google Drive before the session ends.
 
 ### Option 3 — Local (Windows PowerShell)
 ```
@@ -115,6 +129,7 @@ python src/eval.py             # evaluates DistilBERT, generates plots and metri
 python src/rl_agent.py         # trains contextual bandit agent
 python src/demo.py             # runs live demo using DistilBERT + NER + bandit
 ```
+> **Note:** All results including plots and JSON metrics are saved to `experiments/results/`.
 
 > **Note:** Full pipeline requires a CUDA-capable GPU. Recommended: Google Colab with T4 GPU runtime (~60-75 min). Running on CPU is supported for demo only.
 
