@@ -40,7 +40,7 @@ cd fake-news-detection-nlp
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 
-# 3. Download data
+# 3. Download LIAR dataset (required for "bash run.sh --demo" only, full pipeline "bash run.sh" downloads it automatically)
 python data/get_data.py
 
 # 4. Download distilbert_best.pt from the v1.0 GitHub Release
@@ -52,11 +52,10 @@ python data/get_data.py
 bash run.sh --demo
 
 # 6. Run these commands if you want to run the full pipeline (retrain everything)
-bash run.sh
+bash run.sh                   
 ```
 
 ### Option 2 — Google Colab (Recommended)
-
 Run these cells in a new Colab notebook with T4 GPU runtime enabled:
 ```python
 # Cell 1 — Clone and setup
@@ -66,7 +65,7 @@ Run these cells in a new Colab notebook with T4 GPU runtime enabled:
 !python -m spacy download en_core_web_sm -q
 
 # Cell 2 — Download LIAR dataset
-!python data/get_data.py
+!python data/get_data.py    
 
 # Cell 3 — Load model weights from Google Drive
 # First, download distilbert_best.pt from the v1.0 GitHub Release
@@ -82,13 +81,11 @@ print("Model weights loaded!")
 !python src/demo.py
 
 # Cell 5 — Run these commands if you want to run the full pipeline (retrain everything)
-# !python src/train.py
-# !python src/eval.py
-# !python src/rl_agent.py
-# !python src/demo.py
+!python src/train.py            # trains Logistic Regression, Text-CNN, and DistilBERT
+!python src/eval.py             # evaluates DistilBERT, generates plots and metrics
+!python src/rl_agent.py         # trains contextual bandit agent
+!python src/demo.py             # runs live demo using DistilBERT + NER + bandit
 ```
-
-> **Note:** For the full pipeline uncomment the lines in Cell 5 and comment out the demo line in Cell 4.
 
 ### Option 3 — Local (Windows PowerShell)
 ```
@@ -102,7 +99,7 @@ pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 
 # 3. Download data
-python data/get_data.py
+python data/get_data.py        # downloads LIAR dataset
 
 # 4. Download distilbert_best.pt from the v1.0 GitHub Release
 #    Place at: experiments/results/distilbert_best.pt
@@ -113,11 +110,10 @@ python data/get_data.py
 python src/demo.py
 
 # 6. Run these commands if you want to run the full pipeline (retrain everything)
-python data/get_data.py
-python src/train.py
-python src/eval.py
-python src/rl_agent.py
-python src/demo.py
+python src/train.py            # trains Logistic Regression, Text-CNN, and DistilBERT
+python src/eval.py             # evaluates DistilBERT, generates plots and metrics
+python src/rl_agent.py         # trains contextual bandit agent
+python src/demo.py             # runs live demo using DistilBERT + NER + bandit
 ```
 
 > **Note:** Full pipeline requires a CUDA-capable GPU. Recommended: Google Colab with T4 GPU runtime (~60-75 min). Running on CPU is supported for demo only.
