@@ -45,6 +45,8 @@ python data/get_data.py
 
 # 4. Download distilbert_best.pt from the v1.0 GitHub Release
 #    Place at: experiments/results/distilbert_best.pt
+#    Note: Running the full pipeline (step 6) will overwrite this file
+#    with a newly trained model. Download again if needed.
 
 # 5. Run this command if you want to run the demo only
 bash run.sh --demo
@@ -104,6 +106,8 @@ python data/get_data.py
 
 # 4. Download distilbert_best.pt from the v1.0 GitHub Release
 #    Place at: experiments/results/distilbert_best.pt
+#    Note: Running the full pipeline (step 6) will overwrite this file
+#    with a newly trained model. Download again if needed.
 
 # 5. Run this command if you want to run the demo only 
 python src/demo.py
