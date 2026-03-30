@@ -212,10 +212,11 @@ project-root/
         ablation2_results.json
         eval_results.json
   docs/
-    proposal (Week 1).pdf
-    checkpoint (Week 2).pdf
-    final_report (Week 3).pdf
-    slides.pdf
+    Proposal (Week 1).pdf
+    Checkpoint (Week 2).pdf
+    FinalReport (Week 3).pdf
+    FinalDeck.pdf
+    FinalDeck.pptx
     model_card.md
     ethics_statement.md
 ```
