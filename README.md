@@ -40,21 +40,23 @@ cd fake-news-detection-nlp
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 
-# 3. Download LIAR dataset (required for "bash run.sh --demo" only, full pipeline "bash run.sh" downloads it automatically)
-python data/get_data.py
-
-# 4. Download distilbert_best.pt from the v1.0 GitHub Release
+# 3. Download distilbert_best.pt from the v1.0 GitHub Release
 #    Place at: experiments/results/distilbert_best.pt
-#    Note: Running the full pipeline (step 6) will overwrite this file
+#    This is the pre-trained model — required for the demo.
+#    Note: Running the full pipeline (step 5) will overwrite this file
 #    with a newly trained model. Download again if needed.
 
-# 5. Run this command if you want to run the demo only
+# 4. Run this command if you want to run the demo only
+#    (no dataset needed — the demo uses pre-trained model weights)
 bash run.sh --demo
 
-# 6. Run these commands if you want to run the full pipeline (retrain everything)
-bash run.sh                   
+# 5. Run this command if you want to run the full pipeline (retrain everything)
+#    (this will automatically download the LIAR dataset first)
+bash run.sh
 ```
 > **Note:** All results including plots and JSON metrics are saved to `experiments/results/`.
+
+---
 
 ### Option 2 — Google Colab (Recommended)
 Run these cells in a new Colab notebook with T4 GPU runtime enabled:
@@ -75,13 +77,11 @@ import en_core_web_sm
 nlp = en_core_web_sm.load()
 print("Setup complete!")
 
-# Cell 2 — Download LIAR dataset
-!python data/get_data.py    
-
-# Cell 3 — Load model weights from Google Drive
+# Cell 2 — Load model weights from Google Drive
 # First, download distilbert_best.pt from the v1.0 GitHub Release
 # Then upload it to your own Google Drive root folder (My Drive)
-# Note: Running the full pipeline (step 6) will overwrite this file
+# This is the pre-trained model — required for the demo.
+# Note: Running the full pipeline (Cell 5) will overwrite this file
 #       with a newly trained model. Download again if needed.
 from google.colab import drive
 drive.mount('/content/drive')
@@ -90,16 +90,21 @@ os.makedirs('experiments/results', exist_ok=True)
 shutil.copy('/content/drive/MyDrive/distilbert_best.pt', 'experiments/results/distilbert_best.pt')
 print("Model weights loaded!")
 
-# Cell 4 — Run this command if you want to run the demo only
+# Cell 3 — Run this cell if you want to run the demo only
+#           (no dataset needed — the demo uses pre-trained model weights)
 !python src/demo.py
 
-# Cell 5 — Run these commands if you want to run the full pipeline (retrain everything)
+# Cell 4 — Run this cell if you want to run the full pipeline (retrain everything)
+#           (this will automatically download the LIAR dataset first)
+!python data/get_data.py        # downloads LIAR dataset
 !python src/train.py            # trains Logistic Regression, Text-CNN, and DistilBERT
 !python src/eval.py             # evaluates DistilBERT, generates plots and metrics
 !python src/rl_agent.py         # trains contextual bandit agent
 !python src/demo.py             # runs live demo using DistilBERT + NER + bandit
 ```
 > **Note:** All results including plots and JSON metrics are saved to `experiments/results/` within the Colab session. Download them manually or copy to Google Drive before the session ends.
+
+---
 
 ### Option 3 — Local (Windows PowerShell)
 ```
@@ -112,18 +117,19 @@ cd fake-news-detection-nlp-main
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 
-# 3. Download data
-python data/get_data.py        # downloads LIAR dataset
-
-# 4. Download distilbert_best.pt from the v1.0 GitHub Release
+# 3. Download distilbert_best.pt from the v1.0 GitHub Release
 #    Place at: experiments/results/distilbert_best.pt
-#    Note: Running the full pipeline (step 6) will overwrite this file
+#    This is the pre-trained model — required for the demo.
+#    Note: Running the full pipeline (step 5) will overwrite this file
 #    with a newly trained model. Download again if needed.
 
-# 5. Run this command if you want to run the demo only 
+# 4. Run this command if you want to run the demo only
+#    (no dataset needed — the demo uses pre-trained model weights)
 python src/demo.py
 
-# 6. Run these commands if you want to run the full pipeline (retrain everything)
+# 5. Run these commands if you want to run the full pipeline (retrain everything)
+#    (get_data.py downloads the LIAR dataset — required for training)
+python data/get_data.py        # downloads LIAR dataset
 python src/train.py            # trains Logistic Regression, Text-CNN, and DistilBERT
 python src/eval.py             # evaluates DistilBERT, generates plots and metrics
 python src/rl_agent.py         # trains contextual bandit agent
